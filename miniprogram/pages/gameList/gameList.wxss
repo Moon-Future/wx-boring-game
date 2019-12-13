@@ -1,0 +1,13 @@
+/* miniprogram/pages/gameList/gameList.wxss */
+.gamelist-wrapper {
+    display: flex;
+    flex-flow: column;
+}
+
+.gameitem {
+    margin: 20px 50px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid springgreen;
+    border-radius: 4px;
+}

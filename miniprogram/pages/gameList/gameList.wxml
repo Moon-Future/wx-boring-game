@@ -1,0 +1,7 @@
+<view>
+    <view class="gamelist-wrapper">
+        <navigator wx:for="{{ gameList }}" wx:key="index" class="gameitem" url="{{item.url}}">
+            {{ item.name }}
+        </navigator>
+    </view>
+</view>
