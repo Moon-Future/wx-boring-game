@@ -1,4 +1,4 @@
 <view>
-    333
-    <view id="catch-the-cat"></view>
+    <canvas canvas-id="catch-the-cat" style="width:{{width}}px;height:{{height}}px"
+    bindtap="bindtap"></canvas>
 </view>
