@@ -15,7 +15,9 @@ Page({
     posMap: {},
     center: {},
     catPos: {},
-    activePos: {}
+    activePos: {},
+    color: '#b3d9ff',
+    fillColor: '#036'
   },
 
   /**
@@ -50,12 +52,13 @@ Page({
   drawGrid: function() {
     let r = this.data.circle.r;
     let space = this.data.space;
+    let color = this.data.color;
     let posMap = {}, x1, x2, y1, y2;
     for (let i = 0; i < this.data.rows; i++) {
       let y = 2 * r * i + r + space * (i + 1);
       for (let j = 0; j < this.data.cols; j++) {
         let x = 2 * r * j + r + space * (j + 3) + (i % 2 === 0 ? 0 : r);
-        this.drawCircle(x, y, r, '#b3d9ff');
+        this.drawCircle(x, y, r, color);
         x1 = x - r;
         x2 = x + r;
         y1 = y - r;
@@ -76,6 +79,7 @@ Page({
   },
 
   drawRandom: function() {
+    let fillColor = this.data.fillColor;
     let num = this.getRandom(7, 8);
     let arr = ['5_5'], activePos = {};
     for (let i = 0; i < num; i++) {
@@ -89,7 +93,7 @@ Page({
       }
       arr.push(key);
       let data = this.data.posMap[key];
-      this.drawCircle(data.x, data.y, data.r, '#036');
+      this.drawCircle(data.x, data.y, data.r, fillColor);
       activePos[key] = this.filterPos(data)
     }
     this.ctx.draw(true);
@@ -117,8 +121,16 @@ Page({
     return { x, y, r, x1, x2, y1, y2 }
   },
 
-  goStep: function() {
-
+  goStep: function(pos, key) {
+    let catPos = this.data.catPos;
+    this.drawCircle(catPos.x, catPos.y, catPos.r, this.data.color);
+    this.ctx.drawImage('../../images/money.png', pos.x1, pos.y1, catPos.r * 2, catPos.r * 2);
+    this.ctx.draw(true);
+    catPos = this.filterPos(pos);
+    catPos.key = key;
+    this.setData({
+      catPos: catPos
+    });
   },
 
   bindtap: function (e) {
@@ -131,16 +143,17 @@ Page({
         continue;
       }
       if (x > data.x1 && x < data.x2 && y > data.y1 && y < data.y2) {
-        this.drawCircle(data.x, data.y, this.data.circle.r, '#036');
+        this.drawCircle(data.x, data.y, this.data.circle.r, this.data.fillColor);
         this.ctx.draw(true);
         let activeKey = 'activePos.' + key;
         this.setData({
           [activeKey]: this.filterPos(data)
         })
+        this.goStep(this.data.posMap['1_3'], '1_3');
         console.log(this.data.activePos);
         return;
       }
-    } 
+    }
   },
 
   /**
