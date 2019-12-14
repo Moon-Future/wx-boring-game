@@ -50,11 +50,11 @@ Page({
   drawGrid: function() {
     let r = this.data.circle.r;
     let space = this.data.space;
-    let posMap = {},x1, x2, y1, y2;
+    let posMap = {}, x1, x2, y1, y2;
     for (let i = 0; i < this.data.rows; i++) {
       let y = 2 * r * i + r + space * (i + 1);
       for (let j = 0; j < this.data.cols; j++) {
-        let x = 2 * r * j + r + space * (j + 1) + (i % 2 === 0 ? 0 : r);
+        let x = 2 * r * j + r + space * (j + 3) + (i % 2 === 0 ? 0 : r);
         this.drawCircle(x, y, r, '#b3d9ff');
         x1 = x - r;
         x2 = x + r;
@@ -115,6 +115,10 @@ Page({
       y1 = y - r,
       y2 = y + r;
     return { x, y, r, x1, x2, y1, y2 }
+  },
+
+  goStep: function() {
+
   },
 
   bindtap: function (e) {
